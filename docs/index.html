@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'">
+<title>Food Permit &amp; Licence Renewal Tracker · Open MSME</title>
+<meta name="description" content="A free, single-binary tool that keeps every statutory permit a food business holds — FSSAI, GST and trade licence in India; Mayor's permit, sanitary permit, barangay clearance, BIR, fire safety certificate and FDA licence in the Philippines — in one register, with escalating reminders and a renewal-season plan ordered by what blocks what.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script src="assets/theme-init.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/accent.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <span class="brand"><span class="dot"></span> Permit &amp; Licence Renewals <span class="tag">Open MSME</span></span>
+    <span class="sp"></span>
+    <a class="home" href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a>
+    <button class="themer" type="button" data-themer>Theme</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">Food processing &amp; F&amp;B · India and the Philippines</p>
+    <h1>Food business permit and licence renewal tracker for India and the Philippines</h1>
+    <p class="lede">A food business holds six to eight permits from six to eight different authorities, each on its own cycle. Nobody loses the licence they think about — they lose the one nobody was watching. This keeps them all in one register, escalates the reminders, and plans the Philippine January rush in the order the permits actually have to be done.</p>
+    <div class="who">
+      <span class="pill">Restaurants, carinderias, bakeries, processors, cloud kitchens</span>
+      <span class="pill reg">RA 7160 ss. 152, 166–168 · RA 9514 · PD 856 · FSS Act 2006</span>
+      <span class="pill">One binary, runs on your own machine</span>
+    </div>
+  </section>
+
+  <div class="prose">
+
+    <h2>What it does</h2>
+    <p>It is a register of permits, not a watcher of one permit. You put in every statutory authorisation the business actually holds — with the office that issues it, the number on it, the date it runs to, and a note of where the paper is kept — and the tool does five things with them.</p>
+
+    <p><strong>It answers one question first.</strong> <code>Can we trade today?</code> On the date you ask about, is any permit expired such that the business is operating unlawfully — and if so, which ones, from which office, how many days past. Permits you have marked as ones you cannot trade without are the only ones that can make the answer no. A lapsed weights-and-measures stamp is reported; it does not close the shop. A lapsed sanitary permit does.</p>
+
+    <p><strong>It escalates.</strong> Three reminder tiers, 60, 30 and 7 days before expiry by default, which you change. A permit is valid through the whole of its expiry date, so the expiry day itself reads nought days left and is not yet expired; the day after, it is.</p>
+
+    <p><strong>It plans the season.</strong> This is the part a list of dates cannot do. Permits in the Philippines do not fall due one at a time — they fall due all at once, in the first three weeks of January, at the same counters, behind everybody else in the city. And they do not come round independently: the barangay clearance has to be in hand before the city will issue the business permit, and so does the fire safety inspection certificate. The renewal-season view groups everything falling due in a window, orders it by what blocks what, and works backwards from the deadline through the chain to say when each one has to be <em>started</em>.</p>
+
+    <p>On a typical Philippine register that produces a fact the owner would not otherwise have: the food handlers' medical certificates have to be under way by the middle of December to make a 20 January business-permit deadline — because the sanitary permit waits on them, and the business permit waits on that.</p>
+
+    <p><strong>It tracks readiness, not just dates.</strong> "Renew the business permit" is not one task. It is a barangay clearance, three inspections, a sworn declaration of gross receipts, a community tax certificate and a queue. Every permit carries a renewal checklist you tick off as you gather things, so the useful question in the second week of January — how much of this is already done — has an answer.</p>
+
+    <p><strong>It prices being late.</strong> You type in the amount you were assessed; it works out what the delay adds at the rates you have set.</p>
+
+    <h2>Who it's for</h2>
+    <p>Small food businesses in <strong>India</strong> and the <strong>Philippines</strong>: restaurants, carinderias, bakeries, sari-sari stores, canteens, caterers, commissaries, cloud kitchens, small processors and packers. The operators without a compliance officer, where the person who renews the permits is also the person who runs the kitchen.</p>
+    <p>It is just as useful for a business with two or three outlets. A Philippine business permit is issued per location, so each branch carries its own set of permits on its own dates; the tool keeps them apart and will tell you that one branch cannot trade while the others can.</p>
+
+    <h2>The rules it implements</h2>
+
+    <h3>The Philippine January renewal season</h3>
+    <p>Local taxes, fees and charges <strong>accrue on the first day of January and are payable within the first twenty days of January</strong>, or of each subsequent quarter — <strong>Local Government Code of 1991 (Republic Act No. 7160), sections 166 and 167</strong>. That is the statutory shape of the rush, and the date the season plan is worked backwards from. A sanggunian may extend the deadline for a justifiable reason and several cities do so by ordinance, so the tool states the twentieth as a default and tells you to confirm the date your own city has set for the year.</p>
+
+    <h3>Which permits block which</h3>
+    <p>Two links in the Philippine chain are fixed by a named instrument, and the tool says so and quotes it:</p>
+    <ul>
+      <li><strong>Barangay clearance before the business permit.</strong> <strong>Republic Act No. 7160, section 152</strong>: no city or municipality may issue a business permit unless a clearance is first obtained from the barangay where the business is located.</li>
+      <li><strong>Fire safety inspection certificate before the business permit.</strong> <strong>Fire Code of the Philippines of 2008 (Republic Act No. 9514)</strong>: the issuance or renewal of a business permit without a fire safety inspection certificate is a prohibited act, and the fire safety inspector inspects the premises every time the business permit is renewed.</li>
+    </ul>
+    <p>The rest of the default ordering is <strong>a convention, and the tool labels it as one</strong>. Every city and municipal renewal checklist we read lists the sanitary permit among the requirements for a food establishment's business permit, but we found nothing that fixes it before or after the fire certificate, and nothing that fixes the food handlers' health certificates before the establishment's sanitary permit. Those links are shipped as conventions marked <em>check locally</em>, and you reorder or delete them to match your own city hall. Many cities now run the whole set through one one-stop shop in January, in which case the order stops mattering at all.</p>
+
+    <h3>The sanitary permit and the food handlers' certificates</h3>
+    <p>A food establishment operates on a <strong>sanitary permit</strong> from the local health officer, and a food handler holds a <strong>health certificate</strong> issued by the local health officer, under the <strong>Code on Sanitation of the Philippines (Presidential Decree No. 856)</strong> and its implementing rules. Both are issued and renewed locally; the fee, the validity, the inspection routine and the tests behind the medicals are the city's or municipality's own.</p>
+
+    <h3>What a late local payment adds</h3>
+    <p><strong>Republic Act No. 7160, section 168</strong>: a local government unit may impose a <strong>surcharge not exceeding 25 per cent</strong> of the amount of taxes, fees or charges not paid on time, and <strong>interest not exceeding 2 per cent per month</strong> of the unpaid amount <em>including the surcharge</em>, until it is paid — provided the total interest does not exceed <strong>thirty-six months</strong>. Those are ceilings. Your own revenue code sets the rate that applies to you, at or below them, and the tool's figures are editable for exactly that reason. Interest runs per month or fraction of a month, which is why the first day late is the expensive one.</p>
+
+    <h3>India</h3>
+    <p>The <strong>FSSAI licence or registration</strong> comes from the <strong>Food Safety and Standards Act, 2006</strong> and the <strong>Food Safety and Standards (Licensing and Registration of Food Businesses) Regulations, 2011</strong>, and is filed and renewed on FoSCoS. Validity is whatever you chose and paid for, one to five years, so the only right answer is the date printed on your licence. The thirty-day renewal lead the tool uses comes from regulation 2.1.7(2) of those regulations; FSSAI consulted in 2025 on fixed renewal cycles and longer validity, so confirm the current mechanics on FoSCoS.</p>
+    <p>A regular <strong>GST registration does not expire</strong> and sits on the board as a no-expiry row. A casual or non-resident taxable person's registration does expire. The real way to lose a regular registration is cancellation for not filing returns, which no expiry date can warn you about.</p>
+    <p>The <strong>municipal trade licence</strong>, the <strong>state Shops and Establishments registration</strong>, the <strong>fire safety NOC</strong>, the <strong>police eating house licence</strong>, the <strong>legal metrology verification</strong> and the <strong>pollution control consent</strong> are all set locally — by a corporation's by-laws, a state's rules, a board's category list. India has no single renewal date and this tool does not pretend otherwise: the financial-year window it offers is labelled a convention, because many corporations do run the trade licence to 31 March and no national rule says they must.</p>
+
+    <h2>Which FSSAI tier do I need? A different tool answers that</h2>
+    <p>Working out whether an Indian food business needs a <strong>Basic Registration, a State Licence or a Central Licence</strong> has its own thresholds and its own reasoning, and this tracker deliberately does not reimplement it. This one watches the licence you already hold, alongside everything else you hold. For the tier question, use the companion tool:</p>
+    <pre>FSSAI License Navigator — which tier, which form, which documents, what fee
+  https://sreenivas-sadhu-prabhakara.github.io/fssai-license-navigator/</pre>
+
+    <h2>Install &amp; run</h2>
+    <p>One binary, nothing outside the Go standard library. With Go 1.25 or later:</p>
+    <pre># build it once, then run the binary anywhere
+go build -o food-permit-license-renewal-tracker .
+./food-permit-license-renewal-tracker
+
+# or run it straight from the source directory
+go run .
+
+# choose a different port or data file
+./food-permit-license-renewal-tracker -addr 127.0.0.1:8137 -data ~/permits.json
+
+# run the tests
+go test ./...</pre>
+    <p>Then open <code>http://127.0.0.1:8080/</code>. It binds to the loopback address, so it is not reachable from your network unless you deliberately change <code>-addr</code>.</p>
+    <p>Start by adding a jurisdiction preset under <strong>Data &amp; settings</strong> — a named starting list for India or the Philippines, each entry carrying the office that issues it and a note on how much its validity varies locally. Then delete the entries that do not apply to you and type in the dates from your own papers.</p>
+
+    <h2>What it stores</h2>
+    <p>One JSON file, at the path given by <code>-data</code>, printed when the tool starts and shown in the interface. It holds your permits, your dates, your checklist ticks and your settings. It is written with owner-only permissions, and written atomically — to a temporary file in the same directory, then renamed into place — so an interrupted write cannot corrupt what you already had. Back it up by copying that one file.</p>
+    <p><strong>No certificate is ever uploaded or stored.</strong> Each permit holds a <em>reference</em> to where the paper is kept: a path or a sentence in your own words. The tool never reads it, copies it or sends it anywhere. There is no document vault here and there is not going to be one — a tool that holds a business's certificates is a tool that can lose them.</p>
+    <p>Nothing else leaves your machine. The interface is embedded in the binary, the tool binds to loopback, and it makes <strong>no outbound network call of any kind</strong> — no account, no telemetry, no analytics, no update check, no third-party script or font, and no connection to any government portal. The portal addresses in the interface are plain text for you to copy into your own browser.</p>
+
+    <h2>Features</h2>
+    <div class="featgrid">
+      <div class="feat">
+        <h3>Can we trade today?</h3>
+        <p>One answer, naming every permit that has lapsed, the office that issues it and how many days past it is. A blocking permit with no expiry date recorded also stops the answer being yes — nobody can call a date they never typed in valid.</p>
+      </div>
+      <div class="feat">
+        <h3>Named jurisdiction presets</h3>
+        <p>Eight permits for India, eight for the Philippines, each with its issuing authority, an indicative validity and a note saying how much that period varies locally. A starting list you edit, not a table you must accept.</p>
+      </div>
+      <div class="feat">
+        <h3>Renewal season, sequenced</h3>
+        <p>Everything due in a window, grouped into steps by what blocks what, with the statutory links cited and the assumed ones admitted. The plan prints and downloads as a sheet you can carry to the city hall.</p>
+      </div>
+      <div class="feat">
+        <h3>Start-by dates from the deadline</h3>
+        <p>Working backwards along the longest chain, the tool says when each permit has to be started — not when it expires. It marks the chain with no room in it, and turns a start date red once it has gone by.</p>
+      </div>
+      <div class="feat">
+        <h3>Escalating reminders</h3>
+        <p>Three tiers, 60, 30 and 7 days by default, every one of them yours to change. A permit is valid through the whole of its expiry date, so the boundaries are where you would expect them to be.</p>
+      </div>
+      <div class="feat">
+        <h3>Readiness checklists</h3>
+        <p>A renewal checklist per permit, drawn from what the offices actually ask for, ticked off as you gather it and saved as you go. Printable as a sheet for whoever is doing the queueing.</p>
+      </div>
+      <div class="feat">
+        <h3>A permit set per branch</h3>
+        <p>A Philippine business permit is issued per location. Each premises carries its own permits on its own dates, with its own sequence and its own trade verdict.</p>
+      </div>
+      <div class="feat">
+        <h3>The cost of being late</h3>
+        <p>Surcharge and interest on an amount you type in, at rates you set, defaulting to the section 168 ceilings with the thirty-six month interest limit applied.</p>
+      </div>
+      <div class="feat">
+        <h3>Spreadsheet in and out</h3>
+        <p>The whole register exports as one CSV and comes back the same way, merging or replacing. A bad row produces a warning naming the line, not a refused file.</p>
+      </div>
+    </div>
+
+    <h2>Indicative figures, and where we stopped short</h2>
+    <p>Every figure this tool uses is a named constant in one place — <code>internal/permits/params.go</code> — labelled indicative, stated in the interface, and overridable inside the tool. <strong>There is no fee table anywhere in this tool</strong>, and that is deliberate: a food permit fee is set by a city or municipal ordinance, a state by-law or a barangay resolution, assessed against your own gross receipts, and a national figure does not exist. You type in what you were assessed.</p>
+
+    <details class="assumptions">
+      <summary>Every figure, and what it is based on</summary>
+      <p><strong>Reminder tiers — 60, 30 and 7 days.</strong> This tool's own convention, not a requirement of any authority. Far enough out to start a renewal that needs an inspection; the last comfortable moment; an emergency.</p>
+      <p><strong>Processing lead times — 7 days by default, and per permit in the presets.</strong> A convention, and the weakest number here. No authority in either market publishes a figure we could quote, and the real answer depends on the office, the queue and the month. Every lead time is editable and the start dates move with it.</p>
+      <p><strong>The Philippine deadline — 20 January.</strong> Republic Act No. 7160, section 167. A sanggunian may extend it; confirm your own city's date for the year.</p>
+      <p><strong>Surcharge 25 per cent, interest 2 per cent a month, capped at 36 months.</strong> Republic Act No. 7160, section 168 — these are the statutory <em>ceilings</em>, not your rate. Your own revenue code sets what applies to you, at or below them.</p>
+      <p><strong>Validity periods in the presets — 12 months for most, 60 for a DTI business name.</strong> Indicative starting points so an empty register is not useless. The date on your paper always wins.</p>
+      <p><strong>Where we ship no period at all.</strong> Three entries deliberately carry none, because shipping one would be a guess: the <em>state Shops and Establishments registration</em> (several states now issue it for the life of the business, others renew yearly or every five); the <em>pollution control consent</em> (the period follows the board's red, orange, green or white category, from a few years to fifteen, with white-category units often outside the regime altogether); and the <em>FDA licence to operate</em> — see below.</p>
+      <p><strong>The FDA licence to operate: we could not source it.</strong> The FDA has revised the LTO's validity more than once and the figures in circulation conflict with each other — two years initial and five on renewal in one account, three and six by enterprise size in another, five and ten in a third. We could not confirm which is current, so the tool asserts none of them and asks you for the dates printed on your own licence.</p>
+      <p><strong>The FSSAI ₹100-a-day late fee: we did not encode it.</strong> It is widely quoted and was set out in regulation 2.1.7(4) of the 2011 Licensing and Registration Regulations. FSSAI's own 2025 stakeholder notice on fixed renewal cycles states that this late fee has been discontinued. We found no final order settling the position either way, so this tool ships <strong>no India penalty figure at all</strong>: the India rates start at nought and you enter what FoSCoS or your corporation actually charges you.</p>
+      <p><strong>The BIR ₱500 annual registration fee: it is gone, and we say so.</strong> The annual registration fee and the BIR Form 0605 that went with it every January were removed by the <strong>Ease of Paying Taxes Act (Republic Act No. 11976)</strong>; the Bureau stopped collecting it on 22 January 2024. A certificate of registration printed before then that still shows the fee stays valid, and replacing it is optional. The certificate itself does not expire, so it sits on the board as a no-expiry row.</p>
+      <p><strong>No FSSAI tier thresholds.</strong> None of the turnover, capacity or milk-volume figures that decide an FSSAI tier appear anywhere in this tool, because deciding the tier is a different tool's job and duplicating its thresholds would be two places for them to go out of date.</p>
+    </details>
+
+    <div class="note">
+      <p><strong>Validity periods, fees and deadlines vary by city, municipality, barangay and state, and they change.</strong> Every period and rate in this tool is a starting point labelled indicative, pointed at the office that issues the permit, and overridable — and the tool's arithmetic follows your figure once you have set one.</p>
+      <p>This is a planning aid. It is not legal advice, it is not a filing service, it submits nothing on your behalf, and it is connected to no government system. It knows only what you typed in: a permit you did not add cannot appear, and a date typed wrongly stays wrong. The permits from the starting lists that you have not added are shown as <em>gaps</em> — a prompt to decide whether you need that permit, never a finding that you are breaking the law, because whether a food business needs an FDA licence to operate, a police eating house licence or a pollution consent depends on what it does and where.</p>
+      <p>Confirm every date, period, fee and requirement with the authority named against the permit — your barangay hall, city or municipal hall, health office, fire station, revenue district office, FoSCoS, or your state's department — before you act on anything here.</p>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Open MSME · free tools for small businesses · MIT licensed</span>
+    <span><a href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a></span>
+  </div>
+</footer>
+
+<script src="assets/ui.js"></script>
+</body>
+</html>

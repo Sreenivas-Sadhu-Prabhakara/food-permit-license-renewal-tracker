@@ -1,0 +1,16 @@
+# the built binary
+/food-permit-license-renewal-tracker
+/food-permit-license-renewal-tracker.exe
+
+# the register — these are the owner's business permits, never commit them
+*-data.json
+*-data.json.tmp-*
+permit-register.csv
+renewal-season.csv
+
+# editor and OS litter
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/

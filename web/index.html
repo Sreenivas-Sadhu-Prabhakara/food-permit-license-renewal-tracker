@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'; connect-src 'self'">
+<meta name="robots" content="noindex, nofollow">
+<title>Food Permit &amp; Licence Renewal Tracker · Open MSME</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script src="assets/theme-init.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/accent.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <span class="brand"><span class="dot"></span> Permit &amp; Licence Renewals <span class="tag">Open MSME</span></span>
+    <span class="sp"></span>
+    <span class="tag" id="data-file" title="Where your register is stored"></span>
+    <button class="themer" type="button" data-themer>Theme</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">Food processing &amp; F&amp;B · India and the Philippines</p>
+    <h1>Food business permit and licence renewal tracker for India and the Philippines</h1>
+    <p class="lede">A food business holds six to eight permits from different authorities on different cycles. Losing track of one closes the shop. Keep them all in one register, get escalating reminders, and plan the January renewal rush in the order the permits actually have to be done.</p>
+    <div class="who">
+      <span class="pill">Restaurants, carinderias, bakeries, processors, cloud kitchens</span>
+      <span class="pill reg">RA 7160 ss. 166–168 · RA 9514 · PD 856 · FSS Act 2006</span>
+      <span class="pill">Runs on your machine</span>
+    </div>
+  </section>
+
+  <div class="siteline">
+    <div class="field">
+      <label for="site">Premises <span class="hint">a Philippine business permit is issued per location</span></label>
+      <select id="site"></select>
+    </div>
+    <div class="field">
+      <label for="asof">As of <span class="hint">leave at today, or look ahead to a date</span></label>
+      <div class="inp"><input type="date" id="asof"></div>
+    </div>
+  </div>
+
+  <nav class="tabs seg" aria-label="Sections">
+    <button type="button" data-tab="trade" aria-pressed="true">Can we trade today?</button>
+    <button type="button" data-tab="register" aria-pressed="false">Permit register</button>
+    <button type="button" data-tab="season" aria-pressed="false">Renewal season</button>
+    <button type="button" data-tab="permit" aria-pressed="false">Add or edit a permit</button>
+    <button type="button" data-tab="checklists" aria-pressed="false">Readiness checklists</button>
+    <button type="button" data-tab="late" aria-pressed="false">Cost of being late</button>
+    <button type="button" data-tab="data" aria-pressed="false">Data &amp; settings</button>
+  </nav>
+
+  <p class="flash" id="flash" role="status" aria-live="polite" hidden></p>
+
+  <!-- ───────── can we trade today ───────── -->
+  <section class="card panel" id="panel-trade">
+    <h2>Is any permit expired such that we are trading unlawfully?</h2>
+    <div id="trade-answer"></div>
+    <p class="note">This answers from your register and from nothing else. A permit you have not added cannot appear here, and a date typed wrongly stays wrong. Permits from the starting lists that you have not added are shown separately under the register as gaps — a gap is a prompt to decide whether you need that permit, never a finding that you are breaking the law.</p>
+  </section>
+
+  <!-- ───────── register ───────── -->
+  <section class="card panel" id="panel-register" hidden>
+    <h2>Permit register, worst first</h2>
+    <div class="counts" id="board-counts"></div>
+    <div class="tablewrap">
+      <table class="breakdown board" id="board-table">
+        <thead>
+          <tr>
+            <th>Status</th><th>Permit</th><th>Authority</th><th>Number</th>
+            <th>Expires</th><th class="num">Days</th><th>Ready</th><th>Stops trading</th><th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="empty" id="board-empty" hidden>Nothing on the register yet. Start from a jurisdiction preset under Data &amp; settings, then type in the dates from your own papers.</p>
+    <p class="note">Red is expired or inside the final reminder, amber is inside an earlier reminder or has no expiry date recorded, green has time, grey does not expire. Your reminder tiers are <span id="tier-text"></span> days before expiry. A permit is valid through the whole of its expiry date, so the expiry day itself shows nought days and is not yet expired.</p>
+
+    <h3 class="sub">Permits in the starting lists that are not on your register</h3>
+    <p class="hint">Whether you need any of these depends on what your business does and where. An ordinary restaurant needs no FDA licence to operate; a processor does. Add the ones that apply, ignore the rest.</p>
+    <div id="gaps"></div>
+  </section>
+
+  <!-- ───────── renewal season ───────── -->
+  <section class="card panel" id="panel-season" hidden>
+    <h2>Renewal season, in the order it has to be done</h2>
+    <div class="row2">
+      <div class="field">
+        <label for="season-window">Window</label>
+        <select id="season-window">
+          <option value="ph">Philippine January renewal season</option>
+          <option value="in">India, financial year end (a convention)</option>
+          <option value="custom">A window of my own</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="season-year">Year</label>
+        <div class="inp"><input type="number" id="season-year" min="1900" max="2200" step="1"></div>
+      </div>
+    </div>
+    <div class="row2 custom-window" id="season-custom" hidden>
+      <div class="field">
+        <label for="season-from">From</label>
+        <div class="inp"><input type="date" id="season-from"></div>
+      </div>
+      <div class="field">
+        <label for="season-to">To</label>
+        <div class="inp"><input type="date" id="season-to"></div>
+      </div>
+    </div>
+    <div class="field custom-window" id="season-dueby-field" hidden>
+      <label for="season-dueby">Deadline <span class="hint">the date your own office gave you</span></label>
+      <div class="inp"><input type="date" id="season-dueby"></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn primary" type="button" id="season-run">Plan this season</button>
+      <a class="btn ghost" id="season-export" href="api/season.csv">Download the plan</a>
+      <button class="btn ghost" type="button" id="season-print">Print it</button>
+    </div>
+    <div id="season-body"></div>
+  </section>
+
+  <!-- ───────── add or edit a permit ───────── -->
+  <section class="card panel" id="panel-permit" hidden>
+    <h2>Add or edit a permit</h2>
+    <form id="permit-form" autocomplete="off">
+      <div class="row2">
+        <div class="field">
+          <label for="p-preset">Start from a preset <span class="hint">or leave it and type your own below</span></label>
+          <select id="p-preset"></select>
+        </div>
+        <div class="field">
+          <label for="p-site">Premises <span class="hint">leave empty for the main one</span></label>
+          <div class="inp"><input type="text" id="p-site" placeholder="Cubao branch"></div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="p-kind">Short code <span class="hint">lower case, hyphens, no spaces</span></label>
+          <div class="inp"><input type="text" id="p-kind" required placeholder="mayors-permit"></div>
+        </div>
+        <div class="field">
+          <label for="p-market">Market</label>
+          <select id="p-market"></select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="p-label">What the paper calls it</label>
+        <div class="inp"><input type="text" id="p-label" required placeholder="Mayor's permit (business permit)"></div>
+      </div>
+      <div class="field">
+        <label for="p-authority">Who issues it</label>
+        <div class="inp"><input type="text" id="p-authority" placeholder="City Business Permits and Licensing Office"></div>
+      </div>
+      <div class="field">
+        <label for="p-number">Permit number <span class="hint">optional</span></label>
+        <div class="inp"><input type="text" id="p-number"></div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="p-issued">Issued on <span class="hint">optional</span></label>
+          <div class="inp"><input type="date" id="p-issued"></div>
+        </div>
+        <div class="field">
+          <label for="p-expires">Valid until <span class="hint">as printed on the paper</span></label>
+          <div class="inp"><input type="date" id="p-expires"></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" type="button" id="p-suggest">Work the expiry date out</button>
+      </div>
+      <p class="note" id="p-validity-note"></p>
+      <div class="row2">
+        <div class="field">
+          <label for="p-validity">Validity, in months <span class="hint">0 if it varies — then type the date instead</span></label>
+          <div class="inp"><input type="number" id="p-validity" min="0" max="720" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="p-lead">Lead time, in days <span class="hint">how long this office takes you</span></label>
+          <div class="inp"><input type="number" id="p-lead" min="0" max="365" step="1"></div>
+        </div>
+      </div>
+      <div class="toggles">
+        <label for="p-noexpiry"><input type="checkbox" id="p-noexpiry"> It does not expire</label>
+        <label for="p-blocks"><input type="checkbox" id="p-blocks"> Trading without it is unlawful</label>
+        <label for="p-anchor"><input type="checkbox" id="p-anchor"> It renews with the January season</label>
+      </div>
+      <div class="field">
+        <label for="p-docref">Where the certificate is kept <span class="hint">a path or a note on your own machine; nothing is uploaded</span></label>
+        <div class="inp"><input type="text" id="p-docref" placeholder="permits/2027/mayors-permit.pdf"></div>
+      </div>
+      <div class="field">
+        <label for="p-notes">Notes <span class="hint">optional</span></label>
+        <div class="inp"><input type="text" id="p-notes"></div>
+      </div>
+      <h3 class="sub">What this permit waits on</h3>
+      <p class="hint">A permit that cannot be had until another is in hand. The order drives the season plan. Links the law fixes are marked as such; the rest are conventions you should check against your own office.</p>
+      <div id="p-prereqs"></div>
+      <div class="row2">
+        <div class="field">
+          <label for="p-prereq-kind">Add a prerequisite</label>
+          <select id="p-prereq-kind"></select>
+        </div>
+        <div class="field">
+          <label for="p-prereq-why">Why <span class="hint">optional</span></label>
+          <div class="inp"><input type="text" id="p-prereq-why" placeholder="The city hall asks for it"></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" type="button" id="p-prereq-add">Add that prerequisite</button>
+      </div>
+      <div class="btnrow">
+        <button class="btn primary" type="submit">Save this permit</button>
+        <button class="btn ghost" type="reset">Clear the form</button>
+      </div>
+      <p class="note">Saving a short code that is already on the register for the same premises updates that permit. Recording a renewal replaces the record it renews.</p>
+    </form>
+  </section>
+
+  <!-- ───────── checklists ───────── -->
+  <section class="card panel" id="panel-checklists" hidden>
+    <h2>Renewal readiness</h2>
+    <p class="hint">"Renew the business permit" is not one task — it is a barangay clearance, three inspections, a sworn declaration of gross receipts and a queue. Tick these off as you gather them. They are saved as you go.</p>
+    <div class="btnrow">
+      <button class="btn ghost" type="button" id="checklist-print">Print these sheets</button>
+    </div>
+    <div id="checklist-body"></div>
+  </section>
+
+  <!-- ───────── late renewal ───────── -->
+  <section class="card panel" id="panel-late" hidden>
+    <h2>What being late adds</h2>
+    <p class="hint">This tool does not know what your permit costs — that is assessed by your own city or municipality from your own gross receipts, or set by your own state's by-law, and no national figure exists. Type in the amount you were assessed and this works out what the delay adds to it at the rates under Data &amp; settings.</p>
+    <div class="row2">
+      <div class="field">
+        <label for="late-base">Amount assessed</label>
+        <div class="inp"><input type="number" id="late-base" min="0" step="0.01" placeholder="12000"></div>
+      </div>
+      <div class="field">
+        <label for="late-due">It was due on</label>
+        <div class="inp"><input type="date" id="late-due"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="late-paid">Paid, or will be paid, on</label>
+      <div class="inp"><input type="date" id="late-paid"></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn primary" type="button" id="late-run">Work it out</button>
+    </div>
+    <div id="late-answer"></div>
+  </section>
+
+  <!-- ───────── data and settings ───────── -->
+  <section class="card panel" id="panel-data" hidden>
+    <h2>Data and settings</h2>
+
+    <h3 class="sub">Your business</h3>
+    <div class="row2">
+      <div class="field">
+        <label for="b-name">Business name</label>
+        <div class="inp"><input type="text" id="b-name"></div>
+      </div>
+      <div class="field">
+        <label for="b-market">Main market</label>
+        <select id="b-market"></select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="b-locality">City, municipality or corporation <span class="hint">the office whose by-laws set most of the figures on this board</span></label>
+      <div class="inp"><input type="text" id="b-locality" placeholder="Quezon City"></div>
+    </div>
+
+    <h3 class="sub">Escalating reminders</h3>
+    <p class="hint">Days before expiry. The defaults are 60, 30 and 7: far enough out to start a renewal that needs an inspection, the last comfortable moment, and an emergency. They are this tool's own convention, not a requirement of any authority. Set your own.</p>
+    <div class="row3">
+      <div class="field">
+        <label for="t-notice">First reminder</label>
+        <div class="inp has-suf"><input type="number" id="t-notice" min="0" max="3650" step="1"><span class="suf">days</span></div>
+      </div>
+      <div class="field">
+        <label for="t-warn">Second reminder</label>
+        <div class="inp has-suf"><input type="number" id="t-warn" min="0" max="3650" step="1"><span class="suf">days</span></div>
+      </div>
+      <div class="field">
+        <label for="t-urgent">Final reminder</label>
+        <div class="inp has-suf"><input type="number" id="t-urgent" min="0" max="3650" step="1"><span class="suf">days</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Late payment rates</h3>
+    <p class="hint">Enter a rate as a fraction: 0.25 for twenty-five per cent. The Philippine defaults are the ceilings of section 168 of the Local Government Code of 1991 (Republic Act No. 7160) — a surcharge not exceeding 25 per cent of the amount not paid on time, interest not exceeding 2 per cent a month on the unpaid amount including the surcharge, and a total interest limit of thirty-six months. Your own revenue code sets the rate that applies to you, at or below them. This tool ships no India figure at all: FSSAI's own 2025 notice says the ₹100-a-day pre-expiry late fee has been discontinued and we found no final order settling it, so the India rates start at nought and you enter what you are actually charged.</p>
+    <div class="row3">
+      <div class="field">
+        <label for="l-surcharge">Surcharge, once</label>
+        <div class="inp"><input type="number" id="l-surcharge" min="0" max="1" step="0.01"></div>
+      </div>
+      <div class="field">
+        <label for="l-interest">Interest, each month</label>
+        <div class="inp"><input type="number" id="l-interest" min="0" max="1" step="0.001"></div>
+      </div>
+      <div class="field">
+        <label for="l-cap">Interest months cap</label>
+        <div class="inp"><input type="number" id="l-cap" min="1" max="600" step="1"></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="l-daily">Daily late fee, if you are charged one</label>
+        <div class="inp"><input type="number" id="l-daily" min="0" step="0.01"></div>
+      </div>
+      <div class="field">
+        <label for="l-currency">Currency</label>
+        <div class="inp"><input type="text" id="l-currency" maxlength="8" placeholder="PHP"></div>
+      </div>
+    </div>
+    <div class="btnrow">
+      <button class="btn primary" type="button" id="settings-save">Save these settings</button>
+      <button class="btn ghost" type="button" id="settings-reset">Back to the defaults</button>
+    </div>
+
+    <h3 class="sub">Start from a jurisdiction preset</h3>
+    <p class="hint">A named starting list for a market, added to the premises selected at the top of the page. Every entry carries the authority that issues it and a note on how much the validity varies locally. Nothing is added twice and nothing you have typed is overwritten. Delete the entries that do not apply to you — the FDA licence to operate, the police eating house licence and the pollution consent apply to some food businesses and not others.</p>
+    <div class="btnrow" id="preset-buttons"></div>
+
+    <h3 class="sub">Export and import</h3>
+    <p class="hint">One CSV holds the whole register. Open it in any spreadsheet and bring it back when you are done. Checklist ticks are not carried in the file; an imported permit gets its starting checklist back, unticked.</p>
+    <div class="btnrow">
+      <a class="btn ghost" id="export-link" href="api/register.csv" download="permit-register.csv">Download the register</a>
+    </div>
+    <div class="field">
+      <label for="import-file">Import a CSV</label>
+      <input type="file" id="import-file" accept=".csv,text/csv">
+    </div>
+    <div class="field">
+      <label for="import-mode">How to import</label>
+      <select id="import-mode">
+        <option value="merge">Merge into what is already here</option>
+        <option value="replace">Replace every permit</option>
+      </select>
+    </div>
+    <div class="btnrow">
+      <button class="btn primary" type="button" id="import-run">Import</button>
+    </div>
+    <div id="import-report"></div>
+
+    <h3 class="sub">Where your data lives</h3>
+    <p class="hint">Everything is in one JSON file. Back it up by copying that file. No certificate is ever uploaded or stored — each permit holds a reference to where you keep the paper, and this tool never reads it.</p>
+    <pre id="data-file-full"></pre>
+
+    <h3 class="sub">The tier question is a different tool's job</h3>
+    <p class="hint">Which of the three FSSAI tiers an Indian food business needs — Basic Registration, State Licence or Central Licence — has its own thresholds and its own reasoning, and this tracker does not try to answer it. It watches the licence you hold. The address below is plain text so you can copy it into your own browser; this tool makes no outbound request of any kind.</p>
+    <pre>FSSAI License Navigator — which tier do I need?
+  https://sreenivas-sadhu-prabhakara.github.io/fssai-license-navigator/</pre>
+
+    <h3 class="sub">Official portals</h3>
+    <p class="hint">This tool has no connection to any government system and never contacts one. Plain text again, to copy out when you need it.</p>
+    <pre>India
+  FoSCoS, Food Safety Compliance System   https://foscos.fssai.gov.in
+  GST portal                              https://www.gst.gov.in
+
+Philippines
+  Bureau of Internal Revenue              https://www.bir.gov.ph
+  Food and Drug Administration            https://www.fda.gov.ph
+  Bureau of Fire Protection               https://bfp.gov.ph
+  Department of Trade and Industry        https://bnrs.dti.gov.ph
+
+Your barangay hall, city or municipal hall, health office and fire station
+are where the dates on this board actually come from. Nothing typed here is
+checked against any of them.</pre>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Open MSME · free tools for small businesses · MIT licensed</span>
+    <span>No network access. No accounts. Your register stays on this machine.</span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
